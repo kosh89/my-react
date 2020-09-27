@@ -1,71 +1,29 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import "./App.css";
+import Login from "./Login/Login";
+import Contacts from "./Contacts/Contacts";
 
 const App = () => {
-  const [pValue, setPValue] = useState('some text');
-  const [iValue, setIValue] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
 
-  const onFormSubmit = (e) => {
-    e.preventDefault();
-    setPValue(iValue);
-    setIsDisabled(true);
-    setIValue('');
-  }
-
-  const onEditButtonClick = () => {
-    setIValue(pValue);
-    setIsDisabled(false);
-  }
-
-  const onRemoveButtonClick = (e) => {
-    e.target.closest('.contact').remove();
-  }
-
-  const onInputChange = (e) => {
-    setIValue(e.target.value);
-  }
-
-  const onOverlayClick = (e) => {
-    if (e.target.classList.contains('overlay')) {
-      setIsDisabled(true);
-      setIValue('');
-    }
-  }
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
-    <div className='app'>
-      <div className='contact'>
-        <p value={pValue}>
-          {pValue}
-        </p>
-        <button className='button'
-          onClick={onEditButtonClick}
-          disabled={!isDisabled}>
-          edit text
-        </button>
-        <button className='button button--remove'
-          onClick={onRemoveButtonClick}>
-          remove
-        </button>
+    <Router>
+      <div className="app">
+        <Switch>
+          <Route exact path="/">
+          {isAuthenticated ? <Redirect to="/contacts" /> : <Redirect to="/login" />}
+          </Route>
+          <Route path="/login">
+            {isAuthenticated ? <Redirect to="/contacts" /> : <Login auth={setIsAuthenticated} />}
+          </Route>
+          <Route path="/contacts">
+            {isAuthenticated ? <Contacts auth={setIsAuthenticated} /> : <Redirect to="/login" />}
+          </Route>
+        </Switch>
       </div>
-
-      <div className={`modal-edit ${isDisabled ? `` : `show`}`}>
-        <div className='overlay'
-          onClick={onOverlayClick}>
-          <form onSubmit={onFormSubmit}>
-            <input className='input-edit'
-              onChange={onInputChange}
-              value={iValue}
-              type='text' />
-            <button className='button'
-              type='submit'>
-              save
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+    </Router>
   )
 };
 

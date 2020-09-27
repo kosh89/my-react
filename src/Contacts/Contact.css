@@ -1,0 +1,73 @@
+.contacts {
+  padding: 20px;
+}
+
+.contacts__controls {
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: space-between;
+}
+
+.contacts__list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.contacts__card {
+  position: relative;
+  padding: 20px 30px;
+  margin: 15px;
+  width: 300px;
+  background-color: cornsilk;
+  box-shadow: -6px 6px 17px 0px #00000038;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+}
+
+.contacts__card:hover {
+  background-color: #fff8dc80;
+}
+
+.contacts__card:hover .contacts__button {
+  opacity: 0.2;
+}
+
+.contacts__card:hover .contacts__button:hover {
+  opacity: 1;
+}
+
+.contacts__text {
+  color: #2d3748;
+}
+
+.contacts__name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.contacts__phone,
+.contacts__email {
+  display: block;
+}
+
+.contacts__button {
+  width: 15px;
+  height: 15px;
+  opacity: 0;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.contacts__button--edit {
+  top: 30px;
+}
+
+.contacts__button:hover svg {
+  fill: red;
+}
+
+.contacts__button--edit:hover svg {
+  fill: black;
+}
