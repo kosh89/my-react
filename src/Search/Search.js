@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Remove from '../Remove/Remove';
+import React from 'react';
 
 function Search(props) {
 

@@ -2,6 +2,12 @@
   padding: 20px;
 }
 
+.contacts__heading {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
 .contacts__controls {
   display: flex;
   margin-bottom: 30px;

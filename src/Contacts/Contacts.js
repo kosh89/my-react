@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Contact.css';
 import Remove from '../Remove/Remove';
 import Edit from '../Edit/Edit';
@@ -6,6 +6,7 @@ import EditForm from '../EditForm/EditForm';
 import LogoutButton from '../LogoutButton/LogoutButton';
 import AddContact from '../AddContact/AddContact';
 import Search from '../Search/Search';
+import {UserContext} from '../UserContext';
 
 function Contacts(props) {
   const [contacts, setContacts] = useState([]);
@@ -15,6 +16,7 @@ function Contacts(props) {
   const [editPhone, setEditPhone] = useState('');
   const [currentId, setCurrentId] = useState();
   const [searchValue, setSearchValue] = useState('');
+  const [authorizedUser, setAuthorizedUser] = useContext(UserContext);
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -34,7 +36,8 @@ function Contacts(props) {
   }
 
   const onAddClick = () => {
-    setCurrentId(Date.now() / 1000);
+    // id из текущего времени в секундах
+    setCurrentId((Date.now() / 1000).floor());
     setEditFormActive(true);
   }
 
@@ -43,14 +46,12 @@ function Contacts(props) {
   }
 
   const onEditClick = (e) => {
-    console.log(contacts);
     const target = e.target.closest(`.contacts__card`);
     setCurrentId(+target.id);
     setEditFormActive(true);
     setEditName(target.querySelector(`.contacts__name`).textContent);
     setEditEmail(target.querySelector(`.contacts__email`).textContent);
     setEditPhone(target.querySelector(`.contacts__phone`).textContent);
-    console.log(currentId);
   }
 
   const clearEditFields = () => {
@@ -102,6 +103,7 @@ function Contacts(props) {
 
   return (
     <div className="contacts">
+      <h1 className="contacts__heading contacts__text">Hi, {authorizedUser}, here is your contacts.</h1>
       <div className="contacts__controls">
         <AddContact onaddcontactclick={onAddClick} />
         <Search searchvalue={searchValue}
@@ -111,9 +113,9 @@ function Contacts(props) {
       <ul className="contacts__list">
         {contacts.filter((contact) => {
           if (searchValue === '') {
-            return contact
+            return contact;
           } else if (contact.name.toLowerCase().includes(searchValue.toLowerCase())) {
-            return contact
+            return contact;
           }
         }).map((contact) => {
           return (
