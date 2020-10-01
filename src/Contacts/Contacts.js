@@ -37,7 +37,7 @@ function Contacts(props) {
 
   const onAddClick = () => {
     // id из текущего времени в секундах
-    setCurrentId((Date.now() / 1000).floor());
+    setCurrentId(Math.floor(Date.now() / 1000));
     setEditFormActive(true);
   }
 

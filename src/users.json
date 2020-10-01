@@ -2,14 +2,14 @@
   {
     "id": 684286,
     "name": "Sergey Vasilyev",
-    "login": "kosh",
-    "password": "1234"
+    "login": "user1",
+    "password": "1111"
   },
 
   {
     "id": 684222,
     "name": "Vladimir Pupkin",
-    "login": "pup",
-    "password": "1"
+    "login": "user2",
+    "password": "2222"
   }
 ]
