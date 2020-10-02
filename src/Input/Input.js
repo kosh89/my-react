@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 
 function Input(props) {
 
   return (
     <input className="form__input"
-      onChange={props.onchange}
+      onChange={props.onChange}
       value={props.value}
       type={props.type}
+      placeholder={props.placeholder}
       required />
   )
 }

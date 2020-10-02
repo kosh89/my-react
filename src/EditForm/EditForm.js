@@ -1,34 +1,39 @@
-import React from 'react';
-import Input from '../Input/Input';
-import './EditForm.css'
-
+import React from "react";
+import Input from "../Input/Input";
+import "./EditForm.css"
 
 function EditForm(props) {
-
   return (
-    <form className={`form ${props.isEditFormActive ? 'active' : ''}`}
-      onSubmit={props.onformsubmit}>
-      <div className="form__overlay"
-        onMouseDown={props.onformoverlaymousedown}>
+    <div>
+      <form
+        className={`form ${props.isEditFormActive ? "active" : ""}`}
+        onSubmit={props.onFormSubmit}>
         <Input
           type="text"
           value={props.editName}
-          onchange={props.onNameChange} />
+          onChange={props.onNameChange}
+          placeholder="Name" />
         <Input
           type="email"
           value={props.editEmail}
-          onchange={props.onEmailChange} />
+          onChange={props.onEmailChange}
+          placeholder="Email" />
         <Input
           type="tel"
           value={props.editPhone}
-          onchange={props.onPhoneChange} />
-        <button className="form__submit"
-          onSubmit={props.onsubmit}
-          type='submit'>
+          onChange={props.onPhoneChange}
+          placeholder="Phone number" />
+
+        <button
+          className="form__submit"
+          type="submit">
           save
-      </button>
-      </div>
+        </button>
     </form>
+    <div
+      className="overlay"
+      onClick={props.onOverlayClick}></div>
+    </div>
   )
 }
 

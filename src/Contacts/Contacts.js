@@ -1,32 +1,31 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './Contact.css';
-import Remove from '../Remove/Remove';
-import Edit from '../Edit/Edit';
-import EditForm from '../EditForm/EditForm';
-import LogoutButton from '../LogoutButton/LogoutButton';
-import AddContact from '../AddContact/AddContact';
-import Search from '../Search/Search';
-import {UserContext} from '../UserContext';
+import React, { useState, useEffect, useContext } from "react";
+import "./Contact.css";
+import Remove from "../Remove/Remove";
+import Edit from "../Edit/Edit";
+import EditForm from "../EditForm/EditForm";
+import LogoutButton from "../LogoutButton/LogoutButton";
+import AddContact from "../AddContact/AddContact";
+import Search from "../Search/Search";
+import {UserContext} from "../UserContext";
 
 function Contacts(props) {
   const [contacts, setContacts] = useState([]);
   const [isEditFormActive, setEditFormActive] = useState(false);
-  const [editName, setEditName] = useState('');
-  const [editEmail, setEditEmail] = useState('');
-  const [editPhone, setEditPhone] = useState('');
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editPhone, setEditPhone] = useState("");
   const [currentId, setCurrentId] = useState();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [authorizedUser, setAuthorizedUser] = useContext(UserContext);
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then(response => response.json())
       .then(json => setContacts(json))
   }, []);
 
   const onRemoveClick = (e) => {
     const target = e.target.closest(`.contacts__card`);
-    // setCurrentId(+target.id) -- удаляет со второго клика
 
     setContacts(
       contacts.filter((contact) => {
@@ -35,7 +34,7 @@ function Contacts(props) {
     )
   }
 
-  const onAddClick = () => {
+  const onAddContactClick = () => {
     // id из текущего времени в секундах
     setCurrentId(Math.floor(Date.now() / 1000));
     setEditFormActive(true);
@@ -55,9 +54,9 @@ function Contacts(props) {
   }
 
   const clearEditFields = () => {
-    setEditName('');
-    setEditEmail('');
-    setEditPhone('');
+    setEditName("");
+    setEditEmail("");
+    setEditPhone("");
   }
 
   const onFormSubmit = (e) => {
@@ -74,7 +73,6 @@ function Contacts(props) {
     if (index === -1) {
       setContacts(contacts => [...contacts, newContact]);
     } else {
-      // двойная работа (перебор массива 2 раза). Как оптимизировать без?
       setContacts(contacts.map((contact) => contact.id === newContact.id ? newContact : contact));
     }
 
@@ -94,25 +92,23 @@ function Contacts(props) {
     setEditPhone(e.target.value);
   }
 
-  const onFormOverlayMouseDown = (e) => {
-    if (e.target.classList.contains(`form__overlay`)) {
+  const onOverlayClick = () => {
       clearEditFields();
       setEditFormActive(false);
-    }
   }
 
   return (
     <div className="contacts">
       <h1 className="contacts__heading contacts__text">Hi, {authorizedUser}, here is your contacts.</h1>
       <div className="contacts__controls">
-        <AddContact onaddcontactclick={onAddClick} />
-        <Search searchvalue={searchValue}
-          onsearchchange={onSearchChange} />
+        <AddContact onAddContactClick={onAddContactClick} />
+        <Search searchValue={searchValue}
+          onSearchChange={onSearchChange} />
         <LogoutButton auth={props.auth} />
       </div>
       <ul className="contacts__list">
         {contacts.filter((contact) => {
-          if (searchValue === '') {
+          if (searchValue === "") {
             return contact;
           } else if (contact.name.toLowerCase().includes(searchValue.toLowerCase())) {
             return contact;
@@ -128,10 +124,10 @@ function Contacts(props) {
 
               <Remove
                 className="contacts__button contacts__button--remove"
-                onclick={onRemoveClick} />
+                onRemoveClick={onRemoveClick} />
               <Edit
                 className="contacts__button contacts__button--edit"
-                onclick={onEditClick} />
+                onEditClick={onEditClick} />
             </li>
           )
         })}
@@ -143,8 +139,8 @@ function Contacts(props) {
           onNameChange={onNameChange}
           onEmailChange={onEmailChange}
           onPhoneChange={onPhoneChange}
-          onformsubmit={onFormSubmit}
-          onformoverlaymousedown={onFormOverlayMouseDown} />
+          onFormSubmit={onFormSubmit}
+          onOverlayClick={onOverlayClick} />
       </ul>
     </div>
   )
